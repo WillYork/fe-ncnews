@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as api from "../api";
 import UserCard from "./UserCard";
 import Loading from "./Loading";
+import "../App.css";
 
 class UserList extends Component {
   state = { users: [], isLoading: true };
@@ -9,7 +10,7 @@ class UserList extends Component {
   render() {
     const { users } = this.state;
     return (
-      <ul>
+      <ul className="user_list">
         {this.state.isLoading && <Loading />}
         {users &&
           users.map(user => {

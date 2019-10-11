@@ -16,8 +16,9 @@ class MainSection extends Component {
           <ArticleList path="/" />
           <ArticleList path="/articles" />
           <ArticleList path="/articles/topic/:topic" />
-          <ArticleMain path="/articles/article_id/:article_id" />
-          <ArticleMain path="/articles/article_id/:article_id/comments" />
+          <ArticleList path="/articles/username/:username" />
+          <ArticleMain loggedIn={this.props.loggedIn} path="/articles/article_id/:article_id" />
+          <ArticleMain loggedIn={this.props.loggedIn} path="/articles/article_id/:article_id/comments" />
           <UserList path="/users" />
           <TopicList path="/topics" />
         </Router>

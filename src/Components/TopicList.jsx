@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as api from "../api";
 import TopicCard from "./TopicCard";
 import Loading from "./Loading";
+import "../App.css";
 
 class TopicList extends Component {
   state = { topics: [], isLoading: true };

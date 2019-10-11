@@ -1,19 +1,24 @@
 import React from "react";
 import { Link } from "@reach/router";
+import logo from "./NCNVignette.png";
 
 function Header() {
   return (
     <>
-      <h1>NC NEWS</h1>
-      <nav>
+      <Link to="/">
+        <img className="logo" src={logo} alt="" />
+      </Link>
+      <nav className="nav_bar">
         <Link to="/articles">
-          <button>Articles</button>
+          <p>Articles</p>
         </Link>
+        <p> | </p>
         <Link to="/users">
-          <button>Users</button>
+          <p>Users</p>
         </Link>
+        <p> | </p>
         <Link to="/topics">
-          <button>Topics</button>
+          <p>Topics</p>
         </Link>
       </nav>
     </>
