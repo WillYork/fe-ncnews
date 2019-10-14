@@ -13,7 +13,8 @@ class ArticleList extends Component {
     sort_by: "created_at",
     order_by: "desc",
     p: 1,
-    total_count: 1
+    total_count: 1,
+    error: { msg: null, status: null }
   };
 
   render() {
@@ -48,15 +49,21 @@ class ArticleList extends Component {
           </button>
         </nav>
         <main className="App-list">
-                  {this.state.isLoading && <Loading />}
-        <ul>
-          {this.state.articles &&
-            this.state.articles.map(article => {
-              return <ArticleCard key={article.article_id} article={article} />;
-            })}
-        </ul>
+          {this.state.isLoading && <Loading />}
+          {this.state.error && (
+            <p>
+              {this.state.error.status} {this.state.error.msg}
+            </p>
+          )}
+          <ul>
+            {this.state.articles &&
+              this.state.articles.map(article => {
+                return (
+                  <ArticleCard key={article.article_id} article={article} />
+                );
+              })}
+          </ul>
         </main>
-
       </div>
     );
   }
@@ -93,7 +100,14 @@ class ArticleList extends Component {
       .then(({ data: { articles: { articles, total_count } } }) => {
         this.setState({ articles, isLoading: false, total_count });
       })
-      .catch(err => this.setState({ err }));
+      .catch(error =>
+        this.setState({
+          error: {
+            msg: error.response.statusText,
+            status: error.response.status
+          }
+        })
+      );
   };
 
   maxPage = total_count => {

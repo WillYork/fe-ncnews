@@ -5,13 +5,18 @@ import Loading from "./Loading";
 import "../App.css";
 
 class UserList extends Component {
-  state = { users: [], isLoading: true };
+  state = { users: [], isLoading: true, error: { msg: null, status: null } };
 
   render() {
     const { users } = this.state;
     return (
       <ul className="user_list">
         {this.state.isLoading && <Loading />}
+        {this.state.error && (
+          <p>
+            {this.state.error.status} {this.state.error.msg}
+          </p>
+        )}
         {users &&
           users.map(user => {
             return <UserCard key={user.username} user={user} />;
@@ -21,9 +26,19 @@ class UserList extends Component {
   }
 
   componentDidMount() {
-    api.getUsers().then(({ data: { users } }) => {
-      this.setState({ users, isLoading: false });
-    });
+    api
+      .getUsers()
+      .then(({ data: { users } }) => {
+        this.setState({ users, isLoading: false });
+      })
+      .catch(error =>
+        this.setState({
+          error: {
+            msg: error.response.statusText,
+            status: error.response.status
+          }
+        })
+      );
   }
 }
 

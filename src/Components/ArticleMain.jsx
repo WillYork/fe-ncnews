@@ -7,15 +7,30 @@ import Voting from "./Voting";
 import PostComment from "./PostComment";
 
 class ArticleMain extends Component {
-  state = { article: [], isLoading: true, comments: null };
+  state = {
+    article: [],
+    isLoading: true,
+    comments: null,
+    error: { msg: null, status: null }
+  };
   render() {
     return (
       <>
         {this.state.isLoading && <Loading />}
+        {this.state.error && (
+          <p>
+            {this.state.error.status} {this.state.error.msg}
+          </p>
+        )}
         <main className="article_main">
-          <span class="extra_info_span">
-          <p>Posted by {this.state.article.author} at {new Date(this.state.article.created_at).toLocaleString('en-GB', { timeZone: 'UTC' })}</p>
-          <p>{this.state.article.topic}</p>
+          <span className="extra_info_span">
+            <p>
+              Posted by {this.state.article.author} at{" "}
+              {new Date(this.state.article.created_at).toLocaleString("en-GB", {
+                timeZone: "UTC"
+              })}
+            </p>
+            <p>{this.state.article.topic}</p>
           </span>
           <h3>{this.state.article.title}</h3>
           <p>{this.state.article.body}</p>
@@ -24,11 +39,14 @@ class ArticleMain extends Component {
             votes={this.state.article.votes}
           />
         </main>
-        {!this.state.comments && <Link
-          to={`/articles/article_id/${this.state.article.article_id}/comments`}
-        >
-          <button>View Comments</button>
-        </Link>}<br/>
+        {!this.state.comments && (
+          <Link
+            to={`/articles/article_id/${this.state.article.article_id}/comments`}
+          >
+            <button>View Comments</button>
+          </Link>
+        )}
+        <br />
         {this.state.comments && (
           <PostComment
             article_id={this.state.article.article_id}
@@ -58,13 +76,25 @@ class ArticleMain extends Component {
       return Promise.all([
         api.getArticleByID(article_id),
         api.getCommentsByArticleID(article_id)
-      ]).then(([{ data: { article } }, { data: { comments } }]) => {
-        this.setState({ article, isLoading: false, comments });
-      });
+      ])
+        .then(([{ data: { article } }, { data: { comments } }]) => {
+          this.setState({ article, isLoading: false, comments });
+        })
+        .catch(console.log);
     } else {
-      return api.getArticleByID(article_id).then(({ data: { article } }) => {
-        this.setState({ article, isLoading: false });
-      });
+      return api
+        .getArticleByID(article_id)
+        .then(({ data: { article } }) => {
+          this.setState({ article, isLoading: false });
+        })
+        .catch(error =>
+          this.setState({
+            error: {
+              msg: error.response.statusText,
+              status: error.response.status
+            }
+          })
+        );
     }
   }
 
@@ -76,7 +106,15 @@ class ArticleMain extends Component {
         .getCommentsByArticleID(article_id)
         .then(({ data: { comments } }) => {
           this.setState({ comments, isLoading: false });
-        });
+        })
+        .catch(error =>
+          this.setState({
+            error: {
+              msg: error.response.statusText,
+              status: error.response.status
+            }
+          })
+        );
     }
   }
 
