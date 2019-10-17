@@ -62,6 +62,7 @@ class ArticleMain extends Component {
                   key={comment.comment_id}
                   comment={comment}
                   loggedIn={this.props.loggedIn}
+                  deleteComment={this.deleteComment}
                 />
               );
             })}
@@ -80,7 +81,14 @@ class ArticleMain extends Component {
         .then(([{ data: { article } }, { data: { comments } }]) => {
           this.setState({ article, isLoading: false, comments });
         })
-        .catch(console.log);
+        .catch(error =>
+          this.setState({
+            error: {
+              msg: error.response.statusText,
+              status: error.response.status
+            }
+          })
+        );
     } else {
       return api
         .getArticleByID(article_id)
@@ -118,11 +126,17 @@ class ArticleMain extends Component {
     }
   }
 
-  updateComments = () => ({ comment }) => {
+  updateComments = ({ comment }) => {
     this.setState(({ comments }) => {
-      console.log(comment, ...comments);
-      return { comment, ...comments };
+      return { comments: [comment, ...comments] };
     });
   };
+
+  deleteComment = (comment_id) => {
+    this.setState(({comments}) => {
+      return {comments: (comments.filter(comment => comment.comment_id !== comment_id))}
+    })
+  }
+
 }
 export default ArticleMain;

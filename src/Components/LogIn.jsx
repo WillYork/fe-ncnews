@@ -1,25 +1,38 @@
 import React, { Component } from "react";
 import * as api from "../api";
+import "../App.css";
 
 class LogIn extends Component {
-  state = { users: [], loggedIn: "Guest" };
+  state = { users: [], selected: null, loggedIn: null };
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <select name="login" onChange={this.handleSelect}>
-          <option key="Guest" value="Guest">
-            Guest
-          </option>
-          {this.state.users.map(user => {
-            return (
-              <option key={user.username} value={user.username}>
-                {user.username}
+      <div>
+        {!this.state.loggedIn && (
+          <form onSubmit={this.handleSubmit}>
+            <select name="login" onChange={this.handleSelect}>
+              <option key="Guest" value="Guest">
+                Guest
               </option>
-            );
-          })}
-        </select>
-        <input type="submit" value="Sign In" />
-      </form>
+              {this.state.users.map(user => {
+                return (
+                  <option key={user.username} value={user.username}>
+                    {user.username}
+                  </option>
+                );
+              })}
+            </select>
+            <input type="submit" value="Sign In" />
+          </form>
+        )}
+        {this.state.loggedIn && (
+          <>
+          <p className="log-in">Logged in as {this.state.loggedIn}</p>
+          <button onClick={this.handleLogout}>
+            Log out
+          </button>
+          </>
+        )}
+      </div>
     );
   }
 
@@ -32,13 +45,19 @@ class LogIn extends Component {
   handleSelect = e => {
     e.preventDefault();
     const { target } = e;
-    this.setState({ loggedIn: target.value });
+    this.setState({ selected: target.value });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.signIn(this.state.loggedIn);
+    this.props.signIn(this.state.selected)
+    this.setState({loggedIn: this.state.selected});
   };
+
+  handleLogout = e => {
+    e.preventDefault();
+    this.setState({loggedIn: null})
+  }
 }
 
 export default LogIn;

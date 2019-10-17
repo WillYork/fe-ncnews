@@ -15,7 +15,7 @@ class CommentCard extends Component {
         <br />
         <Voting votes={votes} comment_id={comment_id} />
         <br />
-        {(this.props.loggedIn === author) && <RemoveComment comment_id={comment_id} />
+        {(this.props.loggedIn === author) && <RemoveComment comment_id={comment_id} deleteComment={this.props.deleteComment} />
         }
 
       </li>

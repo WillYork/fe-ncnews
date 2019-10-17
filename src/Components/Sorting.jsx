@@ -31,7 +31,7 @@ class Sorting extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label htmlFor="sort">Sort by: </label>
+        <label htmlFor="sort" className="article_nav_bar">Sort by: </label>
         <select name="sort" onChange={this.handleSort}>
           <option value="created_atDesc">
             Newest

@@ -21,27 +21,33 @@ class ArticleList extends Component {
     return (
       <div>
         <nav className="top_bar">
-          <button
+          {(this.state.p > 1) &&
+            (          <button
             className="prev"
             onClick={() => this.changePage(-1)}
-            disabled={this.state.p === 1}
           >
             {" "}
             Previous
-          </button>
+          </button>)
+          }
+
+          <nav className="article_nav_bar">
           <Sorting searchInput={this.searchInput} />
-          <label>Topic: </label>
-          <Link to="/articles/topic/coding">
-            <button>Coding</button>
-          </Link>
-          <Link to="/articles/topic/football">
-            <button>Football</button>
-          </Link>
-          <Link to="/articles/topic/cooking">
-            <button>Cooking</button>
-          </Link>
+            <Link to="/articles/topic/coding">
+              <p>Coding</p>
+            </Link>
+            <p> | </p>
+            <Link to="/articles/topic/football">
+              <p>Football</p>
+            </Link>
+            <p> | </p>
+            <Link to="/articles/topic/cooking">
+              <p>Cooking</p>
+            </Link>
+          </nav>
+
           <button
-            className="prev"
+            className="next"
             onClick={() => this.changePage(1)}
             disabled={this.state.p === this.maxPage(this.state.total_count)}
           >

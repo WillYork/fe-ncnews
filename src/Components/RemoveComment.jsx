@@ -12,7 +12,9 @@ class RemoveComment extends Component {
   }
 
   handleDelete = () => {
-    api.deleteComment(this.props.comment_id);
+    api.deleteComment(this.props.comment_id).then(() => {
+      this.props.deleteComment(this.props.comment_id)
+    });
   };
 }
 
