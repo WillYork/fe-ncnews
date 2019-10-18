@@ -21,18 +21,19 @@ class ArticleList extends Component {
     return (
       <div>
         <nav className="top_bar">
-          {(this.state.p > 1) &&
-            (          <button
-            className="prev"
-            onClick={() => this.changePage(-1)}
-          >
-            {" "}
-            Previous
-          </button>)
-          }
+          {this.state.p > 1 && (
+            <button
+              className="buttons"
+              id="prev"
+              onClick={() => this.changePage(-1)}
+            >
+              {" "}
+              Previous
+            </button>
+          )}
 
           <nav className="article_nav_bar">
-          <Sorting searchInput={this.searchInput} />
+            <Sorting searchInput={this.searchInput} />
             <Link to="/articles/topic/coding">
               <p>Coding</p>
             </Link>
@@ -47,7 +48,8 @@ class ArticleList extends Component {
           </nav>
 
           <button
-            className="next"
+            className="buttons"
+            id="next"
             onClick={() => this.changePage(1)}
             disabled={this.state.p === this.maxPage(this.state.total_count)}
           >
@@ -56,12 +58,12 @@ class ArticleList extends Component {
         </nav>
         <main className="App-list">
           {this.state.isLoading && <Loading />}
-          {this.state.error && (
-            <p>
-              {this.state.error.status} {this.state.error.msg}
-            </p>
-          )}
           <ul>
+            {this.state.error && (
+              <li>
+                {this.state.error.status} {this.state.error.msg}
+              </li>
+            )}
             {this.state.articles &&
               this.state.articles.map(article => {
                 return (

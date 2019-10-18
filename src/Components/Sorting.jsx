@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../App.css"
 
 class Sorting extends Component {
   state = {
@@ -32,7 +33,7 @@ class Sorting extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label htmlFor="sort" className="article_nav_bar">Sort by: </label>
-        <select name="sort" onChange={this.handleSort}>
+        <select className="select-style" name="sort" onChange={this.handleSort}>
           <option value="created_atDesc">
             Newest
           </option>

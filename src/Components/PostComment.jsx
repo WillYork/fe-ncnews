@@ -7,8 +7,17 @@ class PostComment extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <textarea className="comment_box" type="textarea" onChange={this.handleChange} />
-        <button>Post</button>
+        <textarea
+          className="comment_box"
+          type="textarea"
+          onChange={this.handleChange}
+          placeholder={
+            this.props.loggedIn === "Guest"
+              ? "You must be signed in to post a comment"
+              : undefined
+          }
+        />
+        {this.props.loggedIn !== "Guest" && <button>Post</button>}
       </form>
     );
   }
@@ -22,13 +31,15 @@ class PostComment extends Component {
   handleSubmit = e => {
     e.preventDefault();
     if (this.props.loggedIn && this.props.loggedIn !== "Guest") {
-      api.postComment(
-        this.props.article_id,
-        this.props.loggedIn,
-        this.state.body
-      ).then(({data: comment}) => {
-        this.props.updateComments(comment)
-      });
+      api
+        .postComment(
+          this.props.article_id,
+          this.props.loggedIn,
+          this.state.body
+        )
+        .then(({ data: comment }) => {
+          this.props.updateComments(comment);
+        });
     }
   };
 }

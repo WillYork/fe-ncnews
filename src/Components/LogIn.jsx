@@ -9,7 +9,7 @@ class LogIn extends Component {
       <div>
         {!this.state.loggedIn && (
           <form onSubmit={this.handleSubmit}>
-            <select name="login" onChange={this.handleSelect}>
+            <select className="select-style" name="login" onChange={this.handleSelect}>
               <option key="Guest" value="Guest">
                 Guest
               </option>
@@ -21,13 +21,15 @@ class LogIn extends Component {
                 );
               })}
             </select>
-            <input type="submit" value="Sign In" />
+            <br/>
+            <br/>
+            <input className="buttons" type="submit" value="Sign In" />
           </form>
         )}
         {this.state.loggedIn && (
           <>
-          <p className="log-in">Logged in as {this.state.loggedIn}</p>
-          <button onClick={this.handleLogout}>
+          <p className="log-in">{this.state.loggedIn}</p>
+          <button className="buttons" onClick={this.handleLogout}>
             Log out
           </button>
           </>
@@ -57,6 +59,7 @@ class LogIn extends Component {
   handleLogout = e => {
     e.preventDefault();
     this.setState({loggedIn: null})
+    this.props.signIn("Guest")
   }
 }
 
