@@ -4,7 +4,7 @@ The front-end part of the 'NorthCoders News' project written in React. The App i
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 A live deployment can be accessed here: https://northcodernews.netlify.com/
 
@@ -14,14 +14,12 @@ Requires node version 12.00.0 or later installed.
 
 The project uses the following dependencies:
 
-@reach/router 1.2.1
-axios: 0.19.0
-react 16.10.2
-react-dom 16.10.2
-react-loading 2.0.3
-react-scripts 3.2.0
-
-You can install these dependencies after cloning down the repo using npm i or installing them manually. After that, you can start it up using npm start.
+* @reach/router 1.2.1
+* axios: 0.19.0
+* react 16.10.2
+* react-dom 16.10.2
+* react-loading 2.0.3
+* react-scripts 3.2.0
 
 ### Installing
 
@@ -42,4 +40,4 @@ Once they have finished installing, begin the project by running the following c
 
 ## Authors
 
-* **William York** 
+**William York** 
