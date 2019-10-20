@@ -21,17 +21,6 @@ class ArticleList extends Component {
     return (
       <div>
         <nav className="top_bar">
-          {this.state.p > 1 && (
-            <button
-              className="buttons"
-              id="prev"
-              onClick={() => this.changePage(-1)}
-            >
-              {" "}
-              Previous
-            </button>
-          )}
-
           <nav className="article_nav_bar">
             <Sorting searchInput={this.searchInput} />
             <Link to="/articles/topic/coding">
@@ -46,6 +35,17 @@ class ArticleList extends Component {
               <p>Cooking</p>
             </Link>
           </nav>
+          <div className="page_buttons">
+                      {this.state.p > 1 && (
+            <button
+              className="buttons"
+              id="prev"
+              onClick={() => this.changePage(-1)}
+            >
+              {" "}
+              Previous
+            </button>
+          )}
 
           <button
             className="buttons"
@@ -55,6 +55,8 @@ class ArticleList extends Component {
           >
             Next
           </button>
+          </div>
+
         </nav>
         <main className="App-list">
           {this.state.isLoading && <Loading />}

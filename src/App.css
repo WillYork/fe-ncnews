@@ -3,7 +3,7 @@
   display: grid;
   min-height: 100%;
   grid-template-columns: 1fr 5fr 1fr;
-  grid-template-rows: 160px 8fr;
+  grid-template-rows: 250px 8fr;
   text-align: center;
   font-size: calc(10px + 2vmin);
   color: #fdfffc;
@@ -24,8 +24,6 @@
   align-items: center;
   text-align: center;
   grid-area: header;
-  -webkit-box-shadow: 0 8px 6px -6px black;
-  -moz-box-shadow: 0 8px 6px -6px black;
   box-shadow: 0 8px 6px -6px black;
 }
 
@@ -40,19 +38,17 @@
   grid-area: nav;
   display: flex;
   justify-content: space-between;
+  flex-flow: row wrap;
   color: #fdfffc;
   font-size: 70%;
 }
 
-.top_bar {
+.page_buttons {
   display: grid;
-  /* justify-content: space-between; */
-  color: #fdfffc;
-  grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
-  grid-template-rows: 1fr 30px;
+  grid-template-columns: 1fr 5fr 1fr;
+  grid-template-rows: 1fr;
   grid-template-areas:
-    ". nav nav nav ."
-    "prev . . . next"
+    "prev . next"
 }
 
 .log-in {
@@ -82,8 +78,6 @@
   padding-right: 20px;
   color: #fdfffc;
   transition-duration: 0.5s;
-  -moz-box-shadow: inset 0 0 10px #000000;
-  -webkit-box-shadow: inset 0 0 10px #000000;
   box-shadow: inset 0 0 10px #000000;
 }
 

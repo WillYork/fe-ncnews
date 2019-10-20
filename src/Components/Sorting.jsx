@@ -53,7 +53,6 @@ class Sorting extends Component {
             Least Comments
           </option>
         </select>
-        <input type="submit" value="Go!" />
       </form>
     );
   }

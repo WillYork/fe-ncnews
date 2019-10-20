@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./App.css";
 import Header from "./Components/Header";
 import MainSection from "./Components/MainSection";
-import LogIn from "./Components/LogIn";
 
 class App extends Component {
   state = {
@@ -13,8 +12,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <Header loggedIn={this.state.loggedIn} />
-          <LogIn signIn={this.signIn} />
+          <Header loggedIn={this.state.loggedIn} signIn={this.signIn} />
         </header>
         <main className="App-main">
           <MainSection loggedIn={this.state.loggedIn} />

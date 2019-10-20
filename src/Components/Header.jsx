@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "@reach/router";
 import logo from "./NCNVignette.png";
+import LogIn from "./LogIn";
 
-function Header() {
+function Header(props) {
   return (
     <>
       <Link to="/">
@@ -21,6 +22,7 @@ function Header() {
           <p>Topics</p>
         </Link>
       </nav>
+      <LogIn signIn={props.signIn} />
     </>
   );
 }

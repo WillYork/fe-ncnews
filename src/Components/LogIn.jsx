@@ -6,7 +6,7 @@ class LogIn extends Component {
   state = { users: [], selected: null, loggedIn: null };
   render() {
     return (
-      <div>
+      <div className="log-in">
         {!this.state.loggedIn && (
           <form onSubmit={this.handleSubmit}>
             <select className="select-style" name="login" onChange={this.handleSelect}>
