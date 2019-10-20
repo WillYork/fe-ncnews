@@ -23,19 +23,23 @@ The project uses the following dependencies:
 
 ### Installing
 
-### Clone Repo
-
 Clone this repository by running the following in your command line:
 
-`git clone https://github.com/WillYork/fe-ncnews`
+```bash
+git clone https://github.com/WillYork/fe-ncnews
+```
 
 Install all of the prerequisite dependencies specified in the previous seciton by running the following command:
 
-`npm i`
+```bash
+npm i
+```
 
 Once they have finished installing, begin the project by running the following command:
 
-`npm start`
+```bash
+npm start
+```
 
 
 ## Authors
