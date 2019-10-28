@@ -29,10 +29,10 @@ class UserList extends Component {
     api
       .getUsers()
       .then(({ data: { users } }) => {
-        this.setState({ users, isLoading: false });
+        this.setState({ users, isLoading: false, error: { msg: null, status: null }  });
       })
       .catch(error =>
-        this.setState({
+        this.setState({ isLoading: false,
           error: {
             msg: error.response.statusText,
             status: error.response.status

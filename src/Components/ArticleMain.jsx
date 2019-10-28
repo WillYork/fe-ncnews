@@ -79,10 +79,10 @@ class ArticleMain extends Component {
         api.getCommentsByArticleID(article_id)
       ])
         .then(([{ data: { article } }, { data: { comments } }]) => {
-          this.setState({ article, isLoading: false, comments });
+          this.setState({ article, isLoading: false, comments, error: { msg: null, status: null } });
         })
         .catch(error =>
-          this.setState({
+          this.setState({ isLoading: false,
             error: {
               msg: error.response.statusText,
               status: error.response.status
@@ -93,10 +93,10 @@ class ArticleMain extends Component {
       return api
         .getArticleByID(article_id)
         .then(({ data: { article } }) => {
-          this.setState({ article, isLoading: false });
+          this.setState({ article, isLoading: false, error: { msg: null, status: null } });
         })
         .catch(error =>
-          this.setState({
+          this.setState({ isLoading: false,
             error: {
               msg: error.response.statusText,
               status: error.response.status
@@ -106,17 +106,17 @@ class ArticleMain extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const pathChange = this.props.path !== prevProps.path;
     if (pathChange) {
       const { article_id } = this.props;
       return api
         .getCommentsByArticleID(article_id)
         .then(({ data: { comments } }) => {
-          this.setState({ comments, isLoading: false });
+          this.setState({ comments, isLoading: false, error: { msg: null, status: null } });
         })
         .catch(error =>
-          this.setState({
+          this.setState({ isLoading: false,
             error: {
               msg: error.response.statusText,
               status: error.response.status

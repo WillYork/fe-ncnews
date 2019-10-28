@@ -36,27 +36,26 @@ class ArticleList extends Component {
             </Link>
           </nav>
           <div className="page_buttons">
-                      {this.state.p > 1 && (
+            {this.state.p > 1 && (
+              <button
+                className="buttons"
+                id="prev"
+                onClick={() => this.changePage(-1)}
+              >
+                {" "}
+                Previous
+              </button>
+            )}
+
             <button
               className="buttons"
-              id="prev"
-              onClick={() => this.changePage(-1)}
+              id="next"
+              onClick={() => this.changePage(1)}
+              disabled={this.state.p === this.maxPage(this.state.total_count)}
             >
-              {" "}
-              Previous
+              Next
             </button>
-          )}
-
-          <button
-            className="buttons"
-            id="next"
-            onClick={() => this.changePage(1)}
-            disabled={this.state.p === this.maxPage(this.state.total_count)}
-          >
-            Next
-          </button>
           </div>
-
         </nav>
         <main className="App-list">
           {this.state.isLoading && <Loading />}
@@ -108,10 +107,16 @@ class ArticleList extends Component {
     api
       .getArticles(options)
       .then(({ data: { articles: { articles, total_count } } }) => {
-        this.setState({ articles, isLoading: false, total_count });
+        this.setState({
+          articles,
+          isLoading: false,
+          total_count,
+          error: { msg: null, status: null }
+        });
       })
       .catch(error =>
         this.setState({
+          isLoading: false,
           error: {
             msg: error.response.statusText,
             status: error.response.status

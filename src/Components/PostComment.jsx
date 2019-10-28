@@ -17,7 +17,7 @@ class PostComment extends Component {
               : undefined
           }
         />
-        {this.props.loggedIn !== "Guest" && <button>Post</button>}
+        {this.props.loggedIn !== "Guest" && <button disabled={!this.state.body}>Post</button>}
       </form>
     );
   }
