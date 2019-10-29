@@ -3,21 +3,18 @@ import * as api from "../api";
 import TopicCard from "./TopicCard";
 import Loading from "./Loading";
 import "../App.css";
+import Erroring from "./Erroring";
 
 class TopicList extends Component {
-  state = { topics: [], isLoading: true, error: { msg: null, status: null } };
+  state = { topics: [], isLoading: true, error: null };
 
   render() {
     const { searchInput } = this.props;
-    const { topics } = this.state;
+    const { topics, isLoading, error } = this.state;
     return (
       <ul>
-        {this.state.isLoading && <Loading />}
-        {this.state.error && (
-          <p>
-            {this.state.error.status} {this.state.error.msg}
-          </p>
-        )}
+        {isLoading && <Loading />}
+        {error && <Erroring status={error.status} msg={error.msg} />}
         {topics &&
           topics.map(topic => {
             return (
@@ -36,7 +33,7 @@ class TopicList extends Component {
     api
       .getTopics()
       .then(({ data: { topics } }) => {
-        this.setState({ topics, isLoading: false, error: { msg: null, status: null } });
+        this.setState({ topics, isLoading: false, error: null });
       })
       .catch(error =>
         this.setState({ isLoading: false,

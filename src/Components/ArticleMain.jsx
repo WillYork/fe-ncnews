@@ -5,58 +5,54 @@ import { Link } from "@reach/router";
 import CommentCard from "./CommentCard";
 import Voting from "./Voting";
 import PostComment from "./PostComment";
+import Erroring from "./Erroring";
 
 class ArticleMain extends Component {
   state = {
     article: [],
     isLoading: true,
     comments: null,
-    error: { msg: null, status: null }
+    error: null
   };
   render() {
+    const { article, isLoading, comments, error } = this.state;
     return (
       <>
-        {this.state.isLoading && <Loading />}
-        {this.state.error && (
-          <p>
-            {this.state.error.status} {this.state.error.msg}
-          </p>
+        {isLoading && <Loading />}
+        {error && <Erroring status={error.status} msg={error.msg} />}
+        {!error && (
+          <main className="article_main">
+            <span className="extra_info_span">
+              <p>
+                Posted by {article.author} at{" "}
+                {new Date(article.created_at).toLocaleString("en-GB", {
+                  timeZone: "UTC"
+                })}
+              </p>
+              <p>{article.topic}</p>
+            </span>
+            <h3>{article.title}</h3>
+            <p>{article.body}</p>
+            <Voting article_id={article.article_id} votes={article.votes} />
+          </main>
         )}
-        <main className="article_main">
-          <span className="extra_info_span">
-            <p>
-              Posted by {this.state.article.author} at{" "}
-              {new Date(this.state.article.created_at).toLocaleString("en-GB", {
-                timeZone: "UTC"
-              })}
-            </p>
-            <p>{this.state.article.topic}</p>
-          </span>
-          <h3>{this.state.article.title}</h3>
-          <p>{this.state.article.body}</p>
-          <Voting
-            article_id={this.state.article.article_id}
-            votes={this.state.article.votes}
-          />
-        </main>
-        {!this.state.comments && (
-          <Link
-            to={`/articles/article_id/${this.state.article.article_id}/comments`}
-          >
+        {!comments && !error &&  (
+          <Link to={`/articles/article_id/${article.article_id}/comments`}>
             <button>View Comments</button>
           </Link>
         )}
         <br />
-        {this.state.comments && (
+        {comments && (
           <PostComment
-            article_id={this.state.article.article_id}
+            article_id={article.article_id}
             loggedIn={this.props.loggedIn}
             updateComments={this.updateComments}
           />
         )}
+
         <ul>
-          {this.state.comments &&
-            this.state.comments.map(comment => {
+          {comments &&
+            comments.map(comment => {
               return (
                 <CommentCard
                   key={comment.comment_id}
@@ -72,17 +68,23 @@ class ArticleMain extends Component {
   }
 
   componentDidMount() {
-    const { article_id } = this.props;
-    if (this.props.path === `/articles/article_id/:article_id/comments`) {
+    const { article_id, path } = this.props;
+    if (path === `/articles/article_id/:article_id/comments`) {
       return Promise.all([
         api.getArticleByID(article_id),
         api.getCommentsByArticleID(article_id)
       ])
         .then(([{ data: { article } }, { data: { comments } }]) => {
-          this.setState({ article, isLoading: false, comments, error: { msg: null, status: null } });
+          this.setState({
+            article,
+            isLoading: false,
+            comments,
+            error: null
+          });
         })
         .catch(error =>
-          this.setState({ isLoading: false,
+          this.setState({
+            isLoading: false,
             error: {
               msg: error.response.statusText,
               status: error.response.status
@@ -93,10 +95,15 @@ class ArticleMain extends Component {
       return api
         .getArticleByID(article_id)
         .then(({ data: { article } }) => {
-          this.setState({ article, isLoading: false, error: { msg: null, status: null } });
+          this.setState({
+            article,
+            isLoading: false,
+            error: null
+          });
         })
         .catch(error =>
-          this.setState({ isLoading: false,
+          this.setState({
+            isLoading: false,
             error: {
               msg: error.response.statusText,
               status: error.response.status
@@ -113,10 +120,15 @@ class ArticleMain extends Component {
       return api
         .getCommentsByArticleID(article_id)
         .then(({ data: { comments } }) => {
-          this.setState({ comments, isLoading: false, error: { msg: null, status: null } });
+          this.setState({
+            comments,
+            isLoading: false,
+            error: null
+          });
         })
         .catch(error =>
-          this.setState({ isLoading: false,
+          this.setState({
+            isLoading: false,
             error: {
               msg: error.response.statusText,
               status: error.response.status
@@ -132,11 +144,12 @@ class ArticleMain extends Component {
     });
   };
 
-  deleteComment = (comment_id) => {
-    this.setState(({comments}) => {
-      return {comments: (comments.filter(comment => comment.comment_id !== comment_id))}
-    })
-  }
-
+  deleteComment = comment_id => {
+    this.setState(({ comments }) => {
+      return {
+        comments: comments.filter(comment => comment.comment_id !== comment_id)
+      };
+    });
+  };
 }
 export default ArticleMain;

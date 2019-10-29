@@ -5,16 +5,16 @@ import Loading from "./Loading";
 import "../App.css";
 
 class UserList extends Component {
-  state = { users: [], isLoading: true, error: { msg: null, status: null } };
+  state = { users: [], isLoading: true, error: null };
 
   render() {
-    const { users } = this.state;
+    const { users, isLoading, error } = this.state;
     return (
       <ul className="user_list">
-        {this.state.isLoading && <Loading />}
-        {this.state.error && (
+        {isLoading && <Loading />}
+        {error && (
           <p>
-            {this.state.error.status} {this.state.error.msg}
+            {error.status} {error.msg}
           </p>
         )}
         {users &&

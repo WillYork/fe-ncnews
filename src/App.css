@@ -1,7 +1,7 @@
 .App {
   background-color: #003249;
   display: grid;
-  min-height: 100%;
+  min-height: 99vh;
   grid-template-columns: 1fr 5fr 1fr;
   grid-template-rows: 250px 8fr;
   text-align: center;

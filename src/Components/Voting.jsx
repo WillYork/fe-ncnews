@@ -5,13 +5,14 @@ class Voting extends Component {
   state = { voteChange: 0 };
 
   handleVoteChange = () => {
+    const {comment_id, article_id} = this.props
     this.setState(({ voteChange }) => ({ voteChange: voteChange + 1 }));
-    if (this.props.comment_id) {
-      api.patchCommentVote(this.props.comment_id).catch(err => {
+    if (comment_id) {
+      api.patchCommentVote(comment_id).catch(err => {
         this.setState(({ voteChange }) => ({ voteChange: voteChange - 1 }));
       });
-    } else if (this.props.article_id) {
-      api.patchArticleVote(this.props.article_id).catch(err => {
+    } else if (article_id) {
+      api.patchArticleVote(article_id).catch(err => {
         this.setState(({ voteChange }) => ({ voteChange: voteChange - 1 }));
       });
     }

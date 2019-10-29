@@ -5,6 +5,7 @@ import Loading from "./Loading";
 import { Link } from "@reach/router";
 import "../App.css";
 import Sorting from "./Sorting";
+import Erroring from "./Erroring";
 
 class ArticleList extends Component {
   state = {
@@ -14,10 +15,11 @@ class ArticleList extends Component {
     order_by: "desc",
     p: 1,
     total_count: 1,
-    error: { msg: null, status: null }
+    error: null
   };
 
   render() {
+    const {articles, isLoading, p, total_count, error} = this.state
     return (
       <div>
         <nav className="top_bar">
@@ -36,7 +38,7 @@ class ArticleList extends Component {
             </Link>
           </nav>
           <div className="page_buttons">
-            {this.state.p > 1 && (
+            {p > 1 && (
               <button
                 className="buttons"
                 id="prev"
@@ -51,22 +53,18 @@ class ArticleList extends Component {
               className="buttons"
               id="next"
               onClick={() => this.changePage(1)}
-              disabled={this.state.p === this.maxPage(this.state.total_count)}
+              disabled={p === this.maxPage(total_count)}
             >
               Next
             </button>
           </div>
         </nav>
         <main className="App-list">
-          {this.state.isLoading && <Loading />}
+          {isLoading && <Loading />}
           <ul>
-            {this.state.error && (
-              <li>
-                {this.state.error.status} {this.state.error.msg}
-              </li>
-            )}
-            {this.state.articles &&
-              this.state.articles.map(article => {
+            {error && <Erroring status={error.status} msg={error.msg} />}
+            {articles &&
+              articles.map(article => {
                 return (
                   <ArticleCard key={article.article_id} article={article} />
                 );
@@ -111,7 +109,7 @@ class ArticleList extends Component {
           articles,
           isLoading: false,
           total_count,
-          error: { msg: null, status: null }
+          error: null
         });
       })
       .catch(error =>

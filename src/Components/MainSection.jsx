@@ -4,6 +4,7 @@ import { Router } from "@reach/router";
 import UserList from "./UserList";
 import TopicList from "./TopicList";
 import ArticleMain from "./ArticleMain";
+import Erroring from "./Erroring";
 
 function MainSection({ loggedIn }) {
   return (
@@ -23,6 +24,7 @@ function MainSection({ loggedIn }) {
         />
         <UserList path="/users" />
         <TopicList path="/topics" />
+        <Erroring default status={404} msg={"Not found"} />
       </Router>
     </section>
   );
